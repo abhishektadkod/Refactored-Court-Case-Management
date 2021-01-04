@@ -1,0 +1,64 @@
+{
+  "homepage": "http://abhishektadkod.github.io",
+  "name": "court",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "i": "^0.3.6",
+    "install": "^0.13.0",
+    "react": "^16.13.0",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-bootstrap": "^1.0.0-beta.17",
+    "react-cardstack": "^1.1.0",
+    "react-confetti": "^5.0.1",
+    "react-dom": "^16.13.0",
+    "react-hook-form": "^6.14.0",
+    "react-icons": "^3.9.0",
+    "react-infinite": "^0.13.0",
+    "react-motion": "^0.5.2",
+    "react-otp-input": "^1.0.1",
+    "react-pose": "^4.0.10",
+    "react-redux": "^7.2.0",
+    "react-reveal": "^1.2.2",
+    "react-router-dom": "^5.1.2",
+    "react-router-last-location": "^2.0.1",
+    "react-scripts": "3.4.0",
+    "react-shopping-cart": "^1.8.32",
+    "react-timeout": "^1.2.0",
+    "react-transition-group": "^4.3.0",
+    "react-typing-effect": "^2.0.3",
+    "redux": "^4.0.5",
+    "socket.io-client": "^2.3.0"
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
+  }
+}
