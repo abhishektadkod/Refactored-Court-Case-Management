@@ -13,16 +13,20 @@ function ClientLogin() {
   const [error,setError] = useState('')
 
   const onSubmit = (data) => {
-    axios
-        .post(SERVER_URL+'/client/login', 
-            {
-                "username":data.user,
-                "pass":data.password
-            }
-			,
-        { withCredentials: true }
-      )
-      .then(response => {
+      console.log(data)
+      if(data.password==data.password_confirmation){
+      axios
+      .post(SERVER_URL+'/client/add', 
+          {
+              "username":data.user,
+              "pass":data.password,
+              "email":data.email,
+              "repass":data.password_confirmation
+          }
+          ,
+      { withCredentials: true }
+    )
+    .then(response => {
         if (response.status === 200 ) {
           dispatch({ type: "CLIENT", data:response.data })
           window.location.href='/clientdash'
@@ -33,7 +37,11 @@ function ClientLogin() {
       .catch(error => {
         setError('Auth Failed!')
       });
-  };
+  }
+  else{
+    setError("Passwords doesnt match!")
+  }
+};
 
   return (
     <div>
@@ -44,7 +52,7 @@ function ClientLogin() {
       <div className="col-md-2"></div>
       <div className="col-md-8"><br/>
         <Fade top opposite cascade>
-            <div className="display-4">Login Form</div><br/>
+            <div className="display-4">Registration Form</div><br/>
         </Fade>
         <form className="mx-auto d-block" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
@@ -52,13 +60,22 @@ function ClientLogin() {
         <input type="text" placeholder="Enter Username" className="form-control" name="user" ref={register({ required: true})} />
         </div><br/>
         <div className="form-group">
+        <label>Email:</label>
+        <input type="text" placeholder="Enter Email" className="form-control" name="email" ref={register({ required: true})} />
+        </div><br/>
+        <div className="form-group">
         <label>Password:</label>
-        <input type="text" placeholder="Enter Password" className="form-control" name="password" ref={register({ required: true })} />
+        <input type="text" placeholder="Enter Password" className="form-control" name="password" ref={register({ required: true})} />
+        </div><br/>
+        <div className="form-group">
+        <label>Password Confirmation:</label>
+        <input type="text" placeholder="Re-enter Password" className="form-control" name="password_confirmation" ref={register({ required: true })} />
         </div>
         {}
 
-        <button className="btn btn-primary" type="submit">Login</button><br/>
+        <button className="btn btn-primary" type="submit">Register</button><br/>
         <h2><span className="badge badge-secondary">{errors.user  && <span>Username is required</span>}</span></h2>
+        <h2><span className="badge badge-secondary">{errors.email  && <span>Email is required</span>}</span></h2>
         <h2><span className="badge badge-secondary">{errors.password  && <span>Password is required</span>}</span></h2>
         <h2><span className="badge badge-secondary">{error}</span></h2>
       </form>

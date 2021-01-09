@@ -1,16 +1,70 @@
-import React,{useEffect} from 'react'
-import { useDispatch,useSelector } from 'react-redux'
+import React, { Component } from 'react'
+import axios from 'axios';
+import Register from './register';
+import LawyerList from './lawyerList';
+import { SERVER_URL } from '../../Config';
 
-function Dashboard() {
-    const user = useSelector(state => state.user)
-    const dispatch = useDispatch()
+class Dashboard extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             on:true,
+             caseid:"",
+        }
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        
+        this.changeview= this.changeview.bind(this);
+    }
+    
+    changeview(data)
+    {
+        this.setState({ on: false });
+        this.setState({caseid:data});
+        const a=JSON.stringify(this.state)
+        localStorage.setItem('clientdash',a)
+        console.log(data);
+    }
 
-    return (
-        <div>
-            Client Dashboard<br/>
-            {user && user.username}
-        </div>
-    )
+    handleLogoutClick() {
+        
+        axios
+          .get(SERVER_URL + "/client/logout", { withCredentials: true })
+          .then(response => {
+            this.props.loggedOut();
+            this.props.history.push("/");
+          })
+          .catch(error => {
+            console.log("logout error", error);
+          });
+      }
+    
+    componentDidMount(){
+        console.log(this.state.on);
+        const a=localStorage.getItem('clientdash')
+        if(a===null){
+            console.log(undefined);
+        }
+        else{
+        this.setState(JSON.parse(a));    
+        console.log(JSON.parse(a));
+        }
+    }  
+    
+    render() {
+        return (
+            <div>
+                <div className="container-fluid">
+                    <div className="">
+
+                        {(this.state.on)?<Register clients={this.props.User} changeview={this.changeview}/>:
+                                        <LawyerList clients={this.props.User} caseid={this.state.caseid} animation={this.props.animation}/>}
+
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
 export default Dashboard

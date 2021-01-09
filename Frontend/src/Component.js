@@ -1,8 +1,15 @@
 import Home from './Components/Home';
+
+import ClientRegister from './Components/Client/ClientRegister';
 import ClientLogin from './Components/Client/ClientLogin';
+import ClientDashboard from './Components/Client/dashboard';
+import ClientViewcase from './Components/Client/ViewCase';
+import Notify from './Components/Client/notify';
+
 import LawyerLogin from './Components/Lawyer/LawyerLogin';
 import LawyerDashboard from './Components/Lawyer/dashboard';
-import ClientDashboard from './Components/Client/dashboard';
+
+
 
 import { SERVER_URL } from "./Config";
 
@@ -35,18 +42,34 @@ function Component() {
         {'name':'Register','path':'/register'},
         {'name':'Login','path':'/clientlogin'},
         {'name':'Lawyer','path':'/lawyerlogin'},
-        {'name':'Logout','path':'/logout','click':()=>logout()}
+       
     ];
     const routecomponents=[
         {'Component':Home,'path':'/'},
-        // {'Component':Registration,'path':'/register'},
+        {'Component':ClientRegister,'path':'/register'},
         {'Component':ClientLogin,'path':'/clientlogin'},
         {'Component':LawyerLogin,'path':'/lawyerlogin'},
-        {'Component':ClientDashboard,'path':'/clientdash'},
+        // {'Component':ClientDashboard,'path':'/clientdash'},
         {'Component':LawyerDashboard,'path':'/lawyerdash'},
     ];
 
-    return [navlist,routecomponents]
+    const navlistforclient=[
+        {'name':'Home','path':'/clientdash'},
+        // {'name':'My Profile','path':'/dash'},
+        {'name':'Register a case','path':'/case'},
+        {'name':'Registered Cases','path':'/viewcases/0'},
+        // {'name':'History of hearings','path':'/dash'},
+        {'name':'Logout','path':'/logout','click':()=>logout()},
+      ];
+
+      const routecomponentsclient=[
+        {'Component':Home,'path':'/'},
+        {'Component':Notify,'path':'/clientdash'},
+        {'Component':ClientDashboard,'path':'/case'},
+        {'Component':ClientViewcase,'path':'/viewcases/:id'},
+      ];
+
+    return [navlist,routecomponents,navlistforclient,routecomponentsclient]
 }
 
 export default Component

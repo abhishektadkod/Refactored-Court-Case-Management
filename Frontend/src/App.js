@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import './App.css';
 import axios from 'axios';
 import { BrowserRouter, Switch, Route ,Link} from "react-router-dom";
@@ -11,21 +11,23 @@ import Component from './Component';
 
 function App() {
   const user = useSelector(state => state.user)
-  const dispatch = useDispatch()
-  const [navlist,routecomponents]=Component()
-
-  let navigation;
-  let routing;
-  navigation=navlist;
-  routing=routecomponents;
+  const [navlist,routecomponents,navlistforclient,routecomponentsclient]=Component()
+  const [navigation,setNavigation] = useState(navlist);
+  const [routing,setRouting] = useState(routecomponents);
+  
 
   useEffect(() => {
     console.log(user)
     if(user && user.Usertype==1){
-      console.log(user)
+      setNavigation(navlistforclient);
+      setRouting(routecomponentsclient);
     }
-    if(user=="lawyer"){
+    else if(user=="lawyer"){
      
+    }
+    else{
+      setNavigation(navlist);
+      setRouting(routecomponents);
     }
   }, [user])
 
@@ -38,7 +40,6 @@ function App() {
                       <li className="nav-item active" key={index}>
                         <div className="nav-link" onClick={item.click}>
                           <Link className="links" style={{ textDecoration: 'none'}} to={item.path}>{item.name}</Link>
-                          
                         </div>
                       </li>  
                   )}/>
@@ -51,7 +52,8 @@ function App() {
                       key={index}
                       path={path}
                       render={props => (
-                        <Component
+                        <Component {...props}
+                        User={user}
                         />
                       )}
                     />  
